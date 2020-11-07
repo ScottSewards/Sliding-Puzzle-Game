@@ -3,22 +3,22 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-class SlidePuzzleGUI extends JPanel {
+class GUI extends JPanel {
     JFrame frame;
     JMenuBar menu = new JMenuBar();
     JMenu game = new JMenu("Game"), options = new JMenu("Options");
     JMenuItem newGame = new JMenuItem("New Game"), restartGame = new JMenuItem("Restart Game"), cellColour = new JMenuItem("Change Tile Colour");
     JButton newGameButton = new JButton("New Game"), restartGameButton = new JButton("Restart Game");
-    JLabel moves = new JLabel("0 Moves Made"), timer = new JLabel("00:00"), message = new JLabel("Hello!"); //LABELS TO DISPLAY TIMER AND MOVES
+    JLabel moves = new JLabel("0 Moves"), timer = new JLabel("00:00"), message = new JLabel("Welcome."); //LABELS TO DISPLAY TIMER AND MOVES
         
     private GraphicsPanel graphicsPanel;
-    private SlidePuzzleModel puzzleModel = new SlidePuzzleModel(5, 5);
+    private Model puzzleModel = new Model(5, 5);
     //private Tile[][] contents;  //STORES NEW GENERATION OF TILES SO IT CAN BE RESTARTED
     
     int numberOfMoves = 0; //STORES NUMBER OF MOVES
     Color colour = Color.WHITE; //CUSTOM COLOUR FOR CELLS
     
-    public SlidePuzzleGUI(JFrame frame) {
+    public GUI(JFrame frame) {
         this.frame = frame;
 
         JPanel messaggePanel = new JPanel(); //CREATE PANEL FOR TOP OF FRAME
@@ -36,7 +36,7 @@ class SlidePuzzleGUI extends JPanel {
         newGame.addActionListener((ActionEvent e) -> { //REMOVE ACTIONLISTENER CLASSES AND USE LAMBDA EXPRESSIONS TO DECREASE NUMBER OF LINES
             int cols = Integer.parseInt(JOptionPane.showInputDialog("Enter number of columns: ")); //INPUT A NEW NNUMBER OF COLUMNS AND ROWS
             int rows = Integer.parseInt(JOptionPane.showInputDialog("Enter number of rows: "));
-            puzzleModel = new SlidePuzzleModel(cols, rows);
+            puzzleModel = new Model(cols, rows);
             puzzleModel.reset(); //GENERATE A NEW PUZZLE
             //contents = puzzleModel._contents; //
             graphicsPanel.repaint();
@@ -104,19 +104,15 @@ class SlidePuzzleGUI extends JPanel {
 
             if (puzzleModel.moveTile(row, col)) { //RETURNS FALSE IS AN ILLEGAL MOVE
                 numberOfMoves += 1;
-                moves.setText(Integer.toString(numberOfMoves) + " Moves Made");
-                if (puzzleModel.isGameOver()) message.setText("Congratulations, you completed a game!"); 
+                moves.setText(Integer.toString(numberOfMoves) + " Moves");
+                if(puzzleModel.isGameOver()) message.setText("Congratulations, you completed a game!"); 
             }
-            else {
-                Toolkit.getDefaultToolkit().beep(); //SYSTEM PLAYS A BEEP SOUND
-                message.setText("Invalid move!"); 
-            } 
 
             this.repaint();  // Show any updates to model.
         }
 
         public void mouseClicked (MouseEvent e) {
-        
+
         }
         
         public void mouseReleased(MouseEvent e) {

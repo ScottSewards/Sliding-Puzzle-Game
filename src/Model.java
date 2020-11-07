@@ -1,12 +1,12 @@
 
 import java.util.*;
 
-class SlidePuzzleModel {
+class Model {
     public int cols = 6, rows = 3; //SLIDEPUZZLEGUI GETS COL AND ROW FROM THIS CLASS BECAUSE
     public Tile[][] _contents;  //STORES ALL TILES
     private Tile _emptyTile; //STORES EMPTY TILE 
 
-    public SlidePuzzleModel(int cols, int rows) {
+    public Model(int cols, int rows) {
         this.cols = cols;
         this.rows = rows;
         _contents = new Tile[rows][cols];
@@ -47,7 +47,7 @@ class SlidePuzzleModel {
         if (isLegalRowCol(rNeighbor, cNeighbor) && _contents[rNeighbor][cNeighbor] == _emptyTile) { //CHECK FOR EMPTY TILES
             tileList.add(new Tile(r, c, getFace(r, c))); //ADD EMPTY TILE NEIGHBOR
             Collections.reverse(tileList); //REVERSE LIST
-            for (int i = 0; i < tileList.size(); i++) exchangeTiles(tileList.get(i)._row, tileList.get(i)._col, tileList.get(i)._row + rdelta, tileList.get(i)._col + cdelta); //MOVES TILES ONE AFTER ANOTHER IN TILELIST
+            for (int i = 0; i < tileList.size(); i++) exchangeTiles(tileList.get(i).row, tileList.get(i).col, tileList.get(i).row + rdelta, tileList.get(i).col + cdelta); //MOVES TILES ONE AFTER ANOTHER IN TILELIST
             tileList.clear(); //REMOVES ALL TILES FROM LIST
             return true; //EMPTY TILE HAS BEEN FOUND
         } 
